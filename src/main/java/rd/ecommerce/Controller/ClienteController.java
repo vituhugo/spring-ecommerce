@@ -9,9 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import rd.ecommerce.Model.Cliente;
+import rd.ecommerce.Model.Endereco;
 import rd.ecommerce.Repository.ClienteRepository;
+import rd.ecommerce.Repository.EnderecoRepository;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -22,6 +25,9 @@ public class ClienteController {
     @Autowired
     private ClienteRepository repository;
 
+    @Autowired
+    private EnderecoRepository repositoryEndereco;
+
     @GetMapping("/clientes")
     public ResponseEntity<List<Cliente>> listar(){
         List<Cliente> clientes = repository.findAll();
@@ -29,7 +35,8 @@ public class ClienteController {
     }
 
     @PostMapping("/clientes")
-    public ResponseEntity<?> criar(@RequestBody Cliente cliente) {
+    public ResponseEntity<?> criar(@Valid @RequestBody Cliente cliente) {
+
         if (cliente == null) {
             return ResponseEntity.status(400).body("Cliente não pode estar vazio");
         }
