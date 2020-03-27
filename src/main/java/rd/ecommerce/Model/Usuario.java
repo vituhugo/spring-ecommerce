@@ -5,30 +5,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
+@Entity
+@Table(name = "tb_usuario")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "TB_CLIENTE")
+public class Usuario {
 
-public class Cliente  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="ID_CLIENTE")
+    @Column(name="id_usuario")
     private Long id;
 
-    @Column(name="DS_TELEFONE")
-    private String telefone;
+    @Column(name="ds_nome")
+    private String nome;
 
-    @Column(name="DS_RG")
-    private String rg;
+    @Column(name="ds_email")
+    private String email;
 
-    @Column(name="DS_CPF")
-    private String cpf;
+    @Column(name="ds_senha")
+    private String senha;
+
+    @Column(name="ds_nivel_acesso")
+    private String nivelAcesso;
 
     @OneToOne
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    private Usuario user;
+    private Cliente cliente;
 }

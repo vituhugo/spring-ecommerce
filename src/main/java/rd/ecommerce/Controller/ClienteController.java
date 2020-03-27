@@ -1,15 +1,20 @@
 package rd.ecommerce.Controller;
 
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.hibernate.mapping.Map;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import rd.ecommerce.Model.Cliente;
+import rd.ecommerce.Model.Usuario;
 import rd.ecommerce.Repository.ClienteRepository;
+import rd.ecommerce.Repository.UsuarioRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -21,6 +26,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteRepository repository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping("/clientes")
     public ResponseEntity<List<Cliente>> listar(){
@@ -52,55 +60,61 @@ public class ClienteController {
         return ResponseEntity.status(200).body(cliente);
     }
 
-    @PutMapping("/clientes/{id}")
-    public ResponseEntity<?> modificar(@PathVariable("id") Long id, @RequestBody Cliente cliente) {
-//        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED, "ADSADDSAD");
-
-        Cliente cliente1 = repository.getOne(id);
-
-        cliente1.setNome(cliente.getNome());
-        cliente1.setCpf(cliente.getCpf());
-        cliente1.setEmail(cliente.getEmail());
-        cliente1.setRg(cliente.getRg());
-        cliente1.setTelefone(cliente.getTelefone());
-        Cliente response = repository.save(cliente1);
-
-        return ResponseEntity.status(200).body(response);
+    @GetMapping("/perfil")
+    public Usuario perfil(Authentication authentication) {
+        Usuario user = usuarioRepository.findByEmail(authentication.getName());
+        return user;
     }
 
-    @PatchMapping("/clientes/{id}")
-    public ResponseEntity<?> modificarParcial(@PathVariable("id") Long id, @RequestBody Cliente clienteDetails) {
-
-        if (clienteDetails == null) {
-            return ResponseEntity.status(400).body("O cliente não pode ser vazio!");
-        }
-
-//        Cliente cliente = repository.findById(id).orElse(null);
+//    @PutMapping("/clientes/{id}")
+//    public ResponseEntity<?> modificar(@PathVariable("id") Long id, @RequestBody Cliente cliente) {
+////        throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED, "ADSADDSAD");
 //
-//        if (cliente == null) {
-//            return ResponseEntity.status(404).body("O cliente não foi encontrado!");
+//        Cliente cliente1 = repository.getOne(id);
+//
+//        cliente1.setNome(cliente.getNome());
+//        cliente1.setCpf(cliente.getCpf());
+//        cliente1.setEmail(cliente.getEmail());
+//        cliente1.setRg(cliente.getRg());
+//        cliente1.setTelefone(cliente.getTelefone());
+//        Cliente response = repository.save(cliente1);
+//
+//        return ResponseEntity.status(200).body(response);
+//    }
+
+//    @PatchMapping("/clientes/{id}")
+//    public ResponseEntity<?> modificarParcial(@PathVariable("id") Long id, @RequestBody Cliente clienteDetails) {
+//
+//        if (clienteDetails == null) {
+//            return ResponseEntity.status(400).body("O cliente não pode ser vazio!");
 //        }
-        Cliente cliente = repository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
-
-
-        if (clienteDetails.getNome() != null) {
-            cliente.setNome(clienteDetails.getNome());
-        }
-
-        if (clienteDetails.getCpf() != null) {
-            cliente.setCpf(clienteDetails.getCpf());
-        }
-
-        if (clienteDetails.getEmail() != null) {
-            cliente.setEmail(clienteDetails.getEmail());
-        }
-
-        Cliente response = repository.save(cliente);
-
-        return ResponseEntity.status(200).body(response);
-    }
+//
+////        Cliente cliente = repository.findById(id).orElse(null);
+////
+////        if (cliente == null) {
+////            return ResponseEntity.status(404).body("O cliente não foi encontrado!");
+////        }
+//        Cliente cliente = repository
+//                .findById(id)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+//
+//
+//        if (clienteDetails.getNome() != null) {
+//            cliente.setNome(clienteDetails.getNome());
+//        }
+//
+//        if (clienteDetails.getCpf() != null) {
+//            cliente.setCpf(clienteDetails.getCpf());
+//        }
+//
+//        if (clienteDetails.getEmail() != null) {
+//            cliente.setEmail(clienteDetails.getEmail());
+//        }
+//
+//        Cliente response = repository.save(cliente);
+//
+//        return ResponseEntity.status(200).body(response);
+//    }
 
     @DeleteMapping("/clientes/{id}")
     public ResponseEntity<?> remover(@PathVariable("id") Long id) {
