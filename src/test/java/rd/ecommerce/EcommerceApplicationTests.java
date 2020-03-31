@@ -1,5 +1,6 @@
 package rd.ecommerce;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -7,7 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class EcommerceApplicationTests {
 
 	@Test
-	void contextLoads() {
+	public void testarSeEVerdadeiro() {
+		Boolean verdadeiro = true;
+		Assertions.assertThat(verdadeiro).isEqualTo(true);
 	}
-
 }

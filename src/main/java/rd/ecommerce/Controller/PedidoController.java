@@ -17,4 +17,10 @@ public class PedidoController {
     public List<Pedido> listar() {
         return pedidoRepository.findAll();
     }
+
+    // Vou /pedidos com método POST com os dados produto_id: 1, quantidade: 10,
+    // ele me retorna um objeto PEDIDO {id: ?, produto_id: 1, quantidade: 10}
+    // Validação no banco de dados.
+
+    
 }

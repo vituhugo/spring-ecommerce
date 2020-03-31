@@ -48,9 +48,8 @@ public class ClienteController {
 
     @GetMapping("/clientes/{id}")
     public ResponseEntity<?> mostrar(@PathVariable("id") Long id) {
-        Optional<Cliente> opt_cliente = repository.findById(id);
 
-//        cliente.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Não encontrado"));
+        Optional<Cliente> opt_cliente = repository.findById(id);
         Cliente cliente = opt_cliente.orElse(null);
         if (cliente == null) {
             return ResponseEntity.status(404).build();

@@ -47,7 +47,6 @@ public class Cliente  {
 
     @NotNull
     @Email
-    @UniqueElements
     private String email;
 
     @OneToMany(cascade = CascadeType.ALL)
