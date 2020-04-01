@@ -4,46 +4,43 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "TB_CLIENTE")
+@Table(name = "tb_cliente")
 
 public class Cliente  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ID_CLIENTE")
+    @Column(name="id_cliente")
     private Long id;
 
-    @Column(name="DS_NOME")
+    @Column(name="ds_nome")
     @NotBlank
     private String nome;
 
-    @Column(name="DS_TELEFONE")
+    @Column(name="ds_telefone")
     @NotNull
     @Pattern(regexp = "[0-9]{10,11}", message = "Telefone com número inválido")
     @Size(min = 10, max= 11)
     private String telefone;
 
-    @Column(name="DS_RG")
+    @Column(name="ds_rg")
     @NotBlank
     @Size(min = 9, max = 13)
     private String rg;
 
-    @Column(name="DS_CPF")
+    @Column(name="ds_cpf")
     @CPF
     private String cpf;
-    @Column(name="DS_EMAIL")
+    @Column(name="ds_email")
 
     @NotNull
     @Email
@@ -51,7 +48,7 @@ public class Cliente  {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonManagedReference
-    @JoinColumn(name="ID_CLIENTE", referencedColumnName = "ID_CLIENTE")
+    @JoinColumn(name="id_cliente", referencedColumnName = "id_cliente")
     @NotEmpty
     private List<Endereco> enderecos;
 }

@@ -1,32 +1,22 @@
 package rd.ecommerce.Controller;
 
-import org.hibernate.mapping.Map;
-import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import rd.ecommerce.Model.Cliente;
-import rd.ecommerce.Model.Endereco;
 import rd.ecommerce.Repository.ClienteRepository;
 import rd.ecommerce.Repository.EnderecoRepository;
-
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 @RestController
 public class ClienteController {
 
     @Autowired
     private ClienteRepository repository;
-
-    @Autowired
-    private EnderecoRepository repositoryEndereco;
 
     @GetMapping("/clientes")
     public ResponseEntity<List<Cliente>> listar(){

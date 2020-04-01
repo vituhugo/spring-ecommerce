@@ -52,7 +52,8 @@ public class ClienteRepositoryTest {
 
     @Test
     public void adicionarNovoRegistroSemNomeDeveDispararValidationErro() {
-//        thrown.expect(ConstraintViolationException.class);
+        thrown.expect(ConstraintViolationException.class);
+        thrown.expectMessage("não pode estar em branco");
         List<Endereco> enderecos = Arrays.asList(
                 new Endereco(null, "04457090", "SP", "São Paulo", "Jardim Palmares", "Rua marino pinto", "135", null)
         );

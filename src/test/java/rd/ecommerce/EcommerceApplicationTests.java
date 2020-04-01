@@ -7,9 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class EcommerceApplicationTests {
 
-	@Test
-	public void testarSeEVerdadeiro() {
-		Boolean verdadeiro = true;
-		Assertions.assertThat(verdadeiro).isEqualTo(true);
-	}
+//	@Test
+//	public void testarSeEVerdadeiro() {
+//		Boolean verdadeiro = true;
+//		Assertions.assertThat(verdadeiro).isEqualTo(true);
+//	}
 }

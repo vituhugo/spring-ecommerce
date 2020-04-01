@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Arrays;
 
@@ -17,6 +18,8 @@ public class SegurancaCustomConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
+                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .and()
                 .httpBasic()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -25,8 +28,7 @@ public class SegurancaCustomConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //CONFIGURACAO DE REQUEST
                     .anyRequest().authenticated()
-                .and().headers().frameOptions()
-                .and().and().cors();
+                .and().headers().frameOptions();
     }
 
     @Autowired
